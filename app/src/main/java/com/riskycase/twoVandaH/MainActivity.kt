@@ -1,9 +1,12 @@
 package com.riskycase.twoVandaH
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -24,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 
 
 class MainActivity: AppCompatActivity() {
@@ -72,25 +76,23 @@ class MainActivity: AppCompatActivity() {
             if(fba.currentUser == null) {
                 navView.menu.findItem(R.id.nav_sign_out).isVisible = false
                 navView.menu.findItem(R.id.nav_sign_in).isVisible = true
+                navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = "Signed out"
+                navView.getHeaderView(0).findViewById<TextView>(R.id.userMail).text = ""
+                navView.getHeaderView(0).findViewById<ImageView>(R.id.userIcon).setImageResource(R.drawable.default_user)
             }
             else {
                 navView.menu.findItem(R.id.nav_sign_out).isVisible = true
                 navView.menu.findItem(R.id.nav_sign_in).isVisible = false
+                navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = auth.currentUser!!.displayName
+                navView.getHeaderView(0).findViewById<TextView>(R.id.userMail).text = auth.currentUser!!.email
+                Picasso.get().load(auth.currentUser!!.photoUrl).into(navView.getHeaderView(0).findViewById<ImageView>(R.id.userIcon))
+                Log.d("asl", auth.currentUser!!.photoUrl.toString())
             }
-        }
-
-        if(auth.currentUser == null) {
-            navView.menu.findItem(R.id.nav_sign_out).isVisible = false
-            navView.menu.findItem(R.id.nav_sign_in).isVisible = true
-        }
-        else {
-            navView.menu.findItem(R.id.nav_sign_out).isVisible = true
-            navView.menu.findItem(R.id.nav_sign_in).isVisible = false
         }
 
         navView.setNavigationItemSelectedListener{ item ->
             if(item.itemId == R.id.nav_sign_out)
-                FirebaseAuth.getInstance().signOut()
+                auth.signOut()
             else if (item.itemId == R.id.nav_sign_in)
                 signIn()
             return@setNavigationItemSelectedListener true
