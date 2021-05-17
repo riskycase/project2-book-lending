@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "970427543258",
+    "firebase_url": "https://book-lender-8d3bd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "book-lender-8d3bd",
+    "storage_bucket": "book-lender-8d3bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970427543258:android:3c60e9eb6c11fa44bf7fe3",
+        "android_client_info": {
+          "package_name": "com.riskycase.booklending"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "970427543258-g85uhslgn5lsofpak02b8h2034m9i2k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQLS6pC195aWyC3Y_HSfrvRf7Ukhzgtk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "970427543258-g85uhslgn5lsofpak02b8h2034m9i2k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970427543258:android:959cd8009401c778bf7fe3",
+        "android_client_info": {
+          "package_name": "com.riskycase.twoVandaH"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "970427543258-g85uhslgn5lsofpak02b8h2034m9i2k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQLS6pC195aWyC3Y_HSfrvRf7Ukhzgtk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "970427543258-g85uhslgn5lsofpak02b8h2034m9i2k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
