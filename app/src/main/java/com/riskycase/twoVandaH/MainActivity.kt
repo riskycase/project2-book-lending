@@ -1,10 +1,8 @@
 package com.riskycase.twoVandaH
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,10 +20,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
@@ -36,6 +34,7 @@ class MainActivity: AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +54,8 @@ class MainActivity: AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab.setOnClickListener {
+            startActivity(Intent(this, AddBookActivity::class.java))
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -72,11 +70,13 @@ class MainActivity: AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        db = FirebaseFirestore.getInstance()
+
         auth.addAuthStateListener { fba ->
             if(fba.currentUser == null) {
                 navView.menu.findItem(R.id.nav_sign_out).isVisible = false
                 navView.menu.findItem(R.id.nav_sign_in).isVisible = true
-                navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = "Signed out"
+                navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = getString(R.string.signed_out)
                 navView.getHeaderView(0).findViewById<TextView>(R.id.userMail).text = ""
                 navView.getHeaderView(0).findViewById<ImageView>(R.id.userIcon).setImageResource(R.drawable.default_user)
             }
@@ -85,8 +85,19 @@ class MainActivity: AppCompatActivity() {
                 navView.menu.findItem(R.id.nav_sign_in).isVisible = false
                 navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = auth.currentUser!!.displayName
                 navView.getHeaderView(0).findViewById<TextView>(R.id.userMail).text = auth.currentUser!!.email
-                Picasso.get().load(auth.currentUser!!.photoUrl).into(navView.getHeaderView(0).findViewById<ImageView>(R.id.userIcon))
-                Log.d("asl", auth.currentUser!!.photoUrl.toString())
+                Picasso.get().load(auth.currentUser!!.photoUrl).into(
+                    navView.getHeaderView(0).findViewById<ImageView>(
+                        R.id.userIcon
+                    )
+                )
+                // Create a new user with a name and email
+                val user: MutableMap<String, String> = HashMap()
+                user["name"] = auth.currentUser!!.displayName.toString()
+                user["email"] = auth.currentUser!!.email.toString()
+
+                db.collection("users")
+                    .document(auth.currentUser!!.email.toString())
+                    .set(user)
             }
         }
 
@@ -98,12 +109,6 @@ class MainActivity: AppCompatActivity() {
             return@setNavigationItemSelectedListener true
         }
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
     }
 
     override fun onBackPressed() {

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBookActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin" >
+        
+        <LinearLayout
+            android:id="@+id/book_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:visibility="invisible">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="96dp"
+                android:layout_height="144dp"
+                android:layout_margin="@dimen/marginHalf">
+
+                <ImageView
+                    android:id="@+id/book_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_book_cover"/>
+
+            </androidx.cardview.widget.CardView>
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/book_title"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/book_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Author"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="start">
+
+                    <TextView
+                        android:id="@+id/book_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1234"
+                        android:textSize="9sp"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" | "
+                        android:textSize="9sp"/>
+
+                    <TextView
+                        android:id="@+id/book_pages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123 pages"
+                        android:textSize="9sp"
+                        android:textStyle="italic"/>
+
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ISBNText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ISBNPrompt"
+            android:layout_margin="@dimen/marginDouble"/>
+
+        <EditText
+            android:id="@+id/ISBNEntry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/ISBNTooltip"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchButton"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:drawableTintMode="add"
+                android:layout_margin="@dimen/marginHalf"/>
+
+            <Button
+                android:id="@+id/add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AddButton"
+                android:drawableLeft="@android:drawable/ic_menu_add"
+                android:drawableTintMode="add"
+                android:layout_margin="@dimen/marginHalf"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

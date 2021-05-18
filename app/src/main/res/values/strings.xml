@@ -13,4 +13,10 @@
     <string name="web_client_id">970427543258-g85uhslgn5lsofpak02b8h2034m9i2k8.apps.googleusercontent.com</string>
     <string name="menu_login">Login</string>
     <string name="menu_logout">Logout</string>
+    <string name="ISBNPrompt">Please enter the ISBN code of the book</string>
+    <string name="ISBNTooltip">10 or 13 digit ISBN</string>
+    <string name="searchButton">Search</string>
+    <string name="AddButton">Add</string>
+    <string name="signed_out">Signed out</string>
+    <string name="add_a_new_book">Add a new book</string>
 </resources>
