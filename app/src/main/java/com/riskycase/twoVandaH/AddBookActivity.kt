@@ -89,6 +89,7 @@ class AddBookActivity : AppCompatActivity() {
                 book["pages"] = pages
                 book["ISBN"] = ISBN
                 book["coverURL"] = coverURL
+                book["owner"] = auth.currentUser!!.email.toString()
 
                 if(code.isNullOrEmpty()){
                     FirebaseFirestore.getInstance().collection("books")

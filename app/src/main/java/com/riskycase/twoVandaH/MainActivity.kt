@@ -79,12 +79,14 @@ class MainActivity: AppCompatActivity() {
                 navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = getString(R.string.signed_out)
                 navView.getHeaderView(0).findViewById<TextView>(R.id.userMail).text = ""
                 navView.getHeaderView(0).findViewById<ImageView>(R.id.userIcon).setImageResource(R.drawable.default_user)
+                fab.visibility = FloatingActionButton.GONE
             }
             else {
                 navView.menu.findItem(R.id.nav_sign_out).isVisible = true
                 navView.menu.findItem(R.id.nav_sign_in).isVisible = false
                 navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = auth.currentUser!!.displayName
                 navView.getHeaderView(0).findViewById<TextView>(R.id.userMail).text = auth.currentUser!!.email
+                fab.visibility = FloatingActionButton.VISIBLE
                 Picasso.get().load(auth.currentUser!!.photoUrl).into(
                     navView.getHeaderView(0).findViewById<ImageView>(
                         R.id.userIcon
