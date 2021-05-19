@@ -7,6 +7,7 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,7 +27,6 @@ class AddBookActivity : AppCompatActivity() {
     private lateinit var coverURL: String
     private var valid: Boolean = false
     private lateinit var queue: RequestQueue
-    private var code: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +35,10 @@ class AddBookActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_add_book_actvity)
 
+        showInfo(false)
+
         val searchButton = findViewById<Button>(R.id.search_button)
-        val addButton = findViewById<Button>(R.id.add_button)
+        val addButton = findViewById<FloatingActionButton>(R.id.add_button)
 
         searchButton.setOnClickListener { view ->
             Toast.makeText(applicationContext, "Querying database", Toast.LENGTH_SHORT).show()
@@ -72,7 +74,7 @@ class AddBookActivity : AppCompatActivity() {
                     },
                     {
                         showInfo(false)
-                        Snackbar.make(view, "That failed lmao", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(view, "We couldn't find the information for that ISBN", Snackbar.LENGTH_SHORT).show()
                     })
             queue.add(stringRequest)
         }
@@ -91,17 +93,9 @@ class AddBookActivity : AppCompatActivity() {
                 book["coverURL"] = coverURL
                 book["owner"] = auth.currentUser!!.email.toString()
 
-                if(code.isNullOrEmpty()){
-                    FirebaseFirestore.getInstance().collection("books")
-                        .document("${auth.currentUser!!.email.toString()}-${System.currentTimeMillis()}")
-                        .set(book)
-                }
-
-                else{
-                    FirebaseFirestore.getInstance().collection("books")
-                        .document(code.toString())
-                        .set(book)
-                }
+                FirebaseFirestore.getInstance().collection("books")
+                    .document("${auth.currentUser!!.email.toString()}-${System.currentTimeMillis()}")
+                    .set(book)
 
                 finish()
                 Toast.makeText(applicationContext, "Added book $title successfully", Toast.LENGTH_SHORT).show()
@@ -126,6 +120,7 @@ class AddBookActivity : AppCompatActivity() {
 
     private fun showInfo(show: Boolean) {
         findViewById<LinearLayout>(R.id.book_info).visibility = if (show) LinearLayout.VISIBLE else LinearLayout.INVISIBLE
+        findViewById<FloatingActionButton>(R.id.add_button).visibility = if(show) FloatingActionButton.VISIBLE else FloatingActionButton.GONE
         valid = show
     }
 }

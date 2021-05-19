@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddBookActivity">
 
     <LinearLayout
@@ -101,31 +102,24 @@
             android:inputType="number"
             android:hint="@string/ISBNTooltip"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end">
-
             <Button
                 android:id="@+id/search_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:text="@string/searchButton"
                 android:drawableLeft="@android:drawable/ic_menu_search"
                 android:drawableTintMode="add"
                 android:layout_margin="@dimen/marginHalf"/>
 
-            <Button
-                android:id="@+id/add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/AddButton"
-                android:drawableLeft="@android:drawable/ic_menu_add"
-                android:drawableTintMode="add"
-                android:layout_margin="@dimen/marginHalf"/>
-
-        </LinearLayout>
-
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_baseline_chevron_right" />
 
 </FrameLayout>
