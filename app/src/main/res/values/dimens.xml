@@ -8,4 +8,5 @@
     <dimen name="margin">8dp</dimen>
     <dimen name="marginDouble">16dp</dimen>
     <dimen name="marginHalf">4dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

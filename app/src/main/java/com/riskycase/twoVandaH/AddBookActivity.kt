@@ -39,10 +39,11 @@ class AddBookActivity : AppCompatActivity() {
 
         val searchButton = findViewById<Button>(R.id.search_button)
         val addButton = findViewById<FloatingActionButton>(R.id.add_button)
+        val ISBNTextView = findViewById<EditText>(R.id.ISBNEntry)
 
         searchButton.setOnClickListener { view ->
             Toast.makeText(applicationContext, "Querying database", Toast.LENGTH_SHORT).show()
-            ISBN = findViewById<EditText>(R.id.ISBNEntry).text.toString()
+            ISBN = ISBNTextView.text.toString()
             val stringRequest = StringRequest(Request.Method.GET,
                     "https://openlibrary.org/isbn/${ISBN}.json",
                     { response ->
@@ -92,6 +93,7 @@ class AddBookActivity : AppCompatActivity() {
                 book["ISBN"] = ISBN
                 book["coverURL"] = coverURL
                 book["owner"] = auth.currentUser!!.email.toString()
+                book["reader"] = ""
 
                 FirebaseFirestore.getInstance().collection("books")
                     .document("${auth.currentUser!!.email.toString()}-${System.currentTimeMillis()}")

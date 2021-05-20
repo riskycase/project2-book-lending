@@ -64,7 +64,7 @@ class MainActivity: AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_available_books, R.id.nav_my_books
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -108,6 +108,16 @@ class MainActivity: AppCompatActivity() {
                 auth.signOut()
             else if (item.itemId == R.id.nav_sign_in)
                 signIn()
+            else if(item.itemId == R.id.nav_available_books){
+                navController.popBackStack()
+                navController.navigate(R.id.nav_available_books)
+                findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+            }
+            else if(item.itemId == R.id.nav_my_books){
+                navController.popBackStack()
+                navController.navigate(R.id.nav_my_books)
+                findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+            }
             return@setNavigationItemSelectedListener true
         }
 
