@@ -27,7 +27,7 @@ class LaunchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launch)
 
         this.window.statusBarColor = getColor(R.color.launch_statusbar)
-        
+
         // Initialize Firebase Auth
         auth = Firebase.auth
 

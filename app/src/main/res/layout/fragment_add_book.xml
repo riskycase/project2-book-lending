@@ -108,8 +108,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:text="@string/searchButton"
-                android:drawableLeft="@android:drawable/ic_menu_search"
-                android:drawableTintMode="add"
+                android:textColor="@color/design_default_color_on_primary"
+                android:drawableLeft="@drawable/ic_baseline_search"
                 android:layout_margin="@dimen/marginHalf"/>
 
     </LinearLayout>
