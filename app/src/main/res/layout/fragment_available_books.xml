@@ -2,24 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/book_info">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="300dp"
         android:layout_marginTop="@dimen/marginDouble"
         android:layout_marginHorizontal="@dimen/margin">
 
         <ImageView
             android:id="@+id/card_background"
-            android:layout_width="200dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_book_cover"/>
 
         <View
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/overlay"
             android:layout_gravity="bottom"/>
