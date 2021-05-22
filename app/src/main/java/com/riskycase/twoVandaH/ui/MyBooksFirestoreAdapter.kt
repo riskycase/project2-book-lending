@@ -26,9 +26,7 @@ class MyBooksFirestoreAdapter(options: FirestoreRecyclerOptions<Book>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, book: Book) {
-        if(book.getCoverURL() == "")
-            holder.cover.setBackgroundResource(R.drawable.ic_book_cover)
-        else
+        if(book.getCoverURL() != "")
             Picasso.get().load(book.getCoverURL()).into(holder.cover)
         holder.title.text = book.getTitle()
         holder.author.text = book.getAuthor()

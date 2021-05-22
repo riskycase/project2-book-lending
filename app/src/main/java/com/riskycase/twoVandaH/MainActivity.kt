@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -20,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -92,6 +94,7 @@ class MainActivity: AppCompatActivity() {
                     findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
                 }
                 R.id.nav_my_books -> {
+                    Snackbar.make(navView, "Click on any book to stop sharing it", Snackbar.LENGTH_SHORT).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
                     navController.popBackStack()
                     navController.navigate(R.id.nav_my_books)
                     findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
