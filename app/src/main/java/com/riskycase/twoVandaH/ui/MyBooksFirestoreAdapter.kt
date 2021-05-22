@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 import com.riskycase.twoVandaH.R
 import com.squareup.picasso.Picasso
+import java.lang.StringBuilder
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
@@ -38,9 +44,27 @@ class MyBooksFirestoreAdapter(options: FirestoreRecyclerOptions<Book>)
             FirebaseFirestore.getInstance().collection("users").document(book.getReader()).get().addOnSuccessListener {
                 holder.reader.text = "With ${it.get("name")}"
             }
+        holder.content.setOnClickListener { view ->
+            val db = FirebaseFirestore.getInstance()
+            val currentUser = Firebase.auth.currentUser
+            AlertDialog.Builder(view.context)
+                .setTitle("Stop sharing this book?")
+                .setMessage("${book.getTitle()} will not be available for others to read anymore")
+                .setPositiveButton("YES") { dialog, _ ->
+                    if (book.getReader() != "")
+                        db.collection("users").document(book.getReader()).update("reading", "")
+                    db.collection("books").document(book.getId()).delete()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("NO") { dialog, _ -> // Do nothing
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val content: LinearLayout = view.findViewById(R.id.book_info)
         val cover: ImageView = view.findViewById(R.id.book_cover)
         val title: TextView = view.findViewById(R.id.book_title)
         val author: TextView = view.findViewById(R.id.book_author)

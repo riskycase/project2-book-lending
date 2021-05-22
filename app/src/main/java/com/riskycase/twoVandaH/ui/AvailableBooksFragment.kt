@@ -34,7 +34,8 @@ class AvailableBooksFragment : Fragment() {
 
         adapterOptions = FirestoreRecyclerOptions.Builder<Book>()
                 .setQuery(FirebaseFirestore.getInstance().collection("books")
-//                    .whereNotEqualTo("owner", Firebase.auth.currentUser!!.email)
+                    .whereNotEqualTo("owner", Firebase.auth.currentUser!!.email)
+                    .whereEqualTo("reader", "")
                 ) { snapshot ->
                     Book(snapshot.id,
                             snapshot["name"] as String,
