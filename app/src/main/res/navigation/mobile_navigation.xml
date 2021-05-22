@@ -17,4 +17,10 @@
         android:label="@string/my_books"
         tools:layout="@layout/fragment_my_books_list" />
 
+    <fragment
+        android:id="@+id/nav_reading"
+        android:name="com.riskycase.twoVandaH.ReadingBookFragment"
+        android:label="@string/reading"
+        tools:layout="@layout/fragment_reading_book" />
+
 </navigation>

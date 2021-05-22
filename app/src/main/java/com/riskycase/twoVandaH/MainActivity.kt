@@ -25,7 +25,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
@@ -36,11 +38,13 @@ class MainActivity: AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
+        db = FirebaseFirestore.getInstance()
 
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -57,11 +61,30 @@ class MainActivity: AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_available_books, R.id.nav_my_books
+                R.id.nav_available_books, R.id.nav_my_books, R.id.nav_reading
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        db.collection("users").document(auth.currentUser!!.email.toString()).addSnapshotListener { value, _ ->
+            if(value?.get("reading") != "") {
+                navView.menu.findItem(R.id.nav_reading).isVisible = true
+                fab.visibility = FloatingActionButton.GONE
+                navController.popBackStack()
+                navController.navigate(R.id.nav_reading)
+                findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+            }
+            else {
+                navView.menu.findItem(R.id.nav_reading).isVisible = false
+                if (navView.menu.findItem(R.id.nav_reading).isChecked) {
+                    fab.visibility = FloatingActionButton.VISIBLE
+                    navController.popBackStack()
+                    navController.navigate(R.id.nav_available_books)
+                    findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+                }
+            }
+        }
 
         if(auth.currentUser == null) {
             navView.getHeaderView(0).findViewById<TextView>(R.id.userName).text = getString(R.string.signed_out)
@@ -89,14 +112,22 @@ class MainActivity: AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_available_books -> {
+                    fab.visibility = FloatingActionButton.VISIBLE
                     navController.popBackStack()
                     navController.navigate(R.id.nav_available_books)
                     findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
                 }
                 R.id.nav_my_books -> {
+                    fab.visibility = FloatingActionButton.VISIBLE
                     Snackbar.make(navView, "Click on any book to stop sharing it", Snackbar.LENGTH_SHORT).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
                     navController.popBackStack()
                     navController.navigate(R.id.nav_my_books)
+                    findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+                }
+                R.id.nav_reading -> {
+                    fab.visibility = FloatingActionButton.GONE
+                    navController.popBackStack()
+                    navController.navigate(R.id.nav_reading)
                     findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
                 }
             }
