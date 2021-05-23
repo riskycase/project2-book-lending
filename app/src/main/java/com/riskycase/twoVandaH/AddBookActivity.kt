@@ -88,6 +88,7 @@ class AddBookActivity : AppCompatActivity() {
                             "NO"
                         ) { dialog, which -> // Do nothing
                             dialog.dismiss()
+                            setResult(RESULT_CANCELED)
                             finish()
                         }
 
@@ -117,11 +118,12 @@ class AddBookActivity : AppCompatActivity() {
         book["owner"] = Firebase.auth.currentUser!!.email.toString()
         book["reader"] = ""
 
-                FirebaseFirestore.getInstance().collection("books")
-                    .document("${Firebase.auth.currentUser!!.email.toString()}-${System.currentTimeMillis()}")
-                    .set(book)
+        FirebaseFirestore.getInstance().collection("books")
+            .document("${Firebase.auth.currentUser!!.email.toString()}-${System.currentTimeMillis()}")
+            .set(book)
 
-                finish()
+        setResult(RESULT_OK)
+        finish()
         Toast.makeText(applicationContext, "Added book $title successfully", Toast.LENGTH_SHORT).show()
     }
 

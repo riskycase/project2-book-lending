@@ -1,11 +1,11 @@
 package com.riskycase.twoVandaH
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -15,20 +15,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.MetadataChanges
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
@@ -49,11 +41,6 @@ class MainActivity: AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            startActivity(Intent(this, AddBookActivity::class.java))
-        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -66,6 +53,22 @@ class MainActivity: AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+
+        val resultRegisterListenerMethod = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == RESULT_OK){
+                fab.visibility = FloatingActionButton.VISIBLE
+                Snackbar.make(navView, "Click on any book to stop sharing it", Snackbar.LENGTH_SHORT).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
+                navController.popBackStack()
+                navController.navigate(R.id.nav_my_books)
+                findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+            }
+        }
+
+        fab.setOnClickListener {
+            resultRegisterListenerMethod.launch(Intent(this, AddBookActivity::class.java))
+        }
 
         db.collection("users").document(auth.currentUser!!.email.toString()).addSnapshotListener { value, _ ->
             if(value?.get("reading") != "") {
