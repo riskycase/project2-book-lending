@@ -3,6 +3,7 @@ package com.riskycase.twoVandaH
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,6 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
@@ -70,21 +72,23 @@ class MainActivity: AppCompatActivity() {
             resultRegisterListenerMethod.launch(Intent(this, AddBookActivity::class.java))
         }
 
-        db.collection("users").document(auth.currentUser!!.email.toString()).addSnapshotListener { value, _ ->
-            if(value?.get("reading") != "") {
-                navView.menu.findItem(R.id.nav_reading).isVisible = true
-                fab.visibility = FloatingActionButton.GONE
-                navController.popBackStack()
-                navController.navigate(R.id.nav_reading)
-                findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
-            }
-            else {
-                navView.menu.findItem(R.id.nav_reading).isVisible = false
-                if (navView.menu.findItem(R.id.nav_reading).isChecked) {
-                    fab.visibility = FloatingActionButton.VISIBLE
-                    navController.popBackStack()
-                    navController.navigate(R.id.nav_available_books)
-                    findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+        db.collection("users").whereEqualTo("email", auth.currentUser!!.email.toString()).addSnapshotListener { snapshots, _ ->
+            for (change in snapshots!!.documentChanges) {
+                navView.menu.findItem(R.id.nav_reading).isVisible = change.document.contains("reading")
+                if(change.type == DocumentChange.Type.MODIFIED) {
+                    if (change.document.contains("reading")) {
+                        fab.visibility = FloatingActionButton.GONE
+                        navController.popBackStack()
+                        navController.navigate(R.id.nav_reading)
+                        findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+                    } else {
+                        if (navView.menu.findItem(R.id.nav_reading).isChecked) {
+                            fab.visibility = FloatingActionButton.VISIBLE
+                            navController.popBackStack()
+                            navController.navigate(R.id.nav_available_books)
+                            findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
+                        }
+                    }
                 }
             }
         }

@@ -31,14 +31,14 @@ class LaunchActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = Firebase.auth
 
+        super.onCreate(savedInstanceState)
+
         if(auth.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
         else
             findViewById<SignInButton>(R.id.sign_in_button).visibility = SignInButton.VISIBLE
-
-        super.onCreate(savedInstanceState)
 
         db = FirebaseFirestore.getInstance()
 

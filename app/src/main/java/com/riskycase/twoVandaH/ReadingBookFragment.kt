@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
@@ -49,7 +50,7 @@ class ReadingBookFragment : Fragment() {
                         .setMessage("Are you sure you want to return ${snapshot.result?.get("name") as CharSequence?}?")
                         .setPositiveButton("YES") { dialog, _ ->
                             db.collection("users").document(Firebase.auth.currentUser!!.email.toString()).set(
-                                mapOf(Pair("reading", "")), SetOptions.merge())
+                                mapOf(Pair("reading", FieldValue.delete())), SetOptions.merge())
                             db.collection("books").document(snapshot.result?.id.toString()).set(
                                 mapOf(Pair("reader", "")), SetOptions.merge())
                             dialog.dismiss()

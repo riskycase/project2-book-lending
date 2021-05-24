@@ -39,8 +39,7 @@ class AvailableBookFirestoreAdapter(options: FirestoreRecyclerOptions<Book>)
             val db = FirebaseFirestore.getInstance()
             val currentUser = Firebase.auth.currentUser
             db.collection("users").document(currentUser!!.email.toString()).get().addOnCompleteListener { it ->
-                val currentlyReading = it.result?.get("reading")
-                if (currentlyReading.toString() == ""){
+                if (!it.result!!.contains("reading")){
                     db.collection("users").document(book.getOwner()).get().addOnCompleteListener { owner ->
                         val ownerName = owner.result?.get("name")
                         AlertDialog.Builder(view.context)
