@@ -48,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/marginHalf"
+            android:fontFamily="@font/roboto_condensed_regular"
             android:textSize="14sp"/>
 
         <LinearLayout
@@ -59,24 +60,28 @@
             <TextView
                 android:id="@+id/book_year"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" | "/>
+                android:text=" | "
+                android:fontFamily="@font/roboto_condensed_regular"/>
 
             <TextView
                 android:id="@+id/book_pages"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"/>
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/book_owner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_regular"/>
 
         <Button
             android:id="@+id/return_botton"
