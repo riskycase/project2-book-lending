@@ -49,30 +49,35 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/marginHalf"
             android:fontFamily="@font/roboto_condensed_regular"
+            android:textColor="@color/black"
             android:textSize="14sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/black"
             android:layout_margin="@dimen/marginHalf">
 
             <TextView
                 android:id="@+id/book_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:fontFamily="@font/roboto_condensed_regular"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" | "
+                android:textColor="@color/black"
                 android:fontFamily="@font/roboto_condensed_regular"/>
 
             <TextView
                 android:id="@+id/book_pages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:fontFamily="@font/roboto_condensed_regular"/>
 
         </LinearLayout>
@@ -81,6 +86,7 @@
             android:id="@+id/book_owner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:fontFamily="@font/roboto_condensed_regular"/>
 
         <Button
