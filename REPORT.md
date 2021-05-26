@@ -18,5 +18,5 @@ Frontend | [triquetra271201](https://github.com/triquetra271201), [Yarlord](http
 * Splash screen 
 * Material design
 
-## Figma designs can be found here 
-https://www.figma.com/file/AusnGvzu3jmDgfe0Ki2yxL/Untitled
+## Figma designs 
+Figma designs can be found [here](https://www.figma.com/file/AusnGvzu3jmDgfe0Ki2yxL/Untitled)
