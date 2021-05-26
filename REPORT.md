@@ -8,7 +8,7 @@ The UI makes use of multiple activities, navigation drawer, and RecyclerView
 Components | Contributors
 ------------ | -------------
 Backend | [riskycase](https://github.com/riskycase)
-Frontend | [triquetra271201](https://github.com/triquetra271201), Vatsal Nadkarni
+Frontend | [triquetra271201](https://github.com/triquetra271201), [Yarlord](https://github.com/Yarlord)
 
 ## Technologies learnt
 * Firebase authentication
